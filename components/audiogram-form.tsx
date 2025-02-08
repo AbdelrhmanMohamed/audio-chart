@@ -1,31 +1,48 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useAudiology } from "@/contextes/audiology-context"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import type { PTATestType, AudiogramPoint, AudiogramFormData } from "@/types/audiology"
+import { useState } from "react";
+import { useAudiology } from "@/contextes/audiology-context";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type {
+  PTATestType,
+  AudiogramPoint,
+  AudiogramFormData,
+} from "@/types/audiology";
 
 export function AudiogramForm() {
-  const { data, addAudiogramPoint, updateAudiogramPoint, removeAudiogramPoint } = useAudiology()
+  const {
+    data,
+    addAudiogramPoint,
+    updateAudiogramPoint,
+    removeAudiogramPoint,
+  } = useAudiology();
   const [formData, setFormData] = useState<AudiogramFormData>({
     id: "",
     frequency: "",
     threshold: "",
     ear: "right",
     testType: "AC",
-  })
+  });
 
-  const frequencies = [125, 250, 500, 750, 1000, 1500, 2000, 3000, 4000, 6000, 8000]
-  const testTypes: PTATestType[] = ["AC", "BC", "SF", "SAL", "UCL"]
+  const frequencies = [
+    125, 250, 500, 750, 1000, 1500, 2000, 3000, 4000, 6000, 8000,
+  ];
+  const testTypes: PTATestType[] = ["AC", "BC", "SF", "SAL", "UCL"];
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const frequency = Number.parseInt(formData.frequency)
-    const threshold = Number.parseInt(formData.threshold)
+    e.preventDefault();
+    const frequency = Number.parseInt(formData.frequency);
+    const threshold = Number.parseInt(formData.threshold);
 
     if (!isNaN(frequency) && !isNaN(threshold)) {
       if (formData.id) {
@@ -34,24 +51,24 @@ export function AudiogramForm() {
           frequency,
           threshold,
           testType: formData.testType,
-        })
+        });
       } else {
         addAudiogramPoint(formData.ear, {
           frequency,
           threshold,
           testType: formData.testType,
-        })
+        });
       }
-      setFormData((prev) => ({ ...prev, id: "", threshold: "" }))
+      setFormData((prev) => ({ ...prev, id: "", threshold: "" }));
     }
-  }
+  };
 
   const handleRemove = () => {
     if (formData.id) {
-      removeAudiogramPoint(formData.ear, formData.id)
-      setFormData((prev) => ({ ...prev, id: "", threshold: "" }))
+      removeAudiogramPoint(formData.ear, formData.id);
+      setFormData((prev) => ({ ...prev, id: "", threshold: "" }));
     }
-  }
+  };
 
   const handlePointSelect = (ear: "right" | "left", point: AudiogramPoint) => {
     setFormData({
@@ -60,8 +77,8 @@ export function AudiogramForm() {
       threshold: point.threshold.toString(),
       ear,
       testType: point.testType,
-    })
-  }
+    });
+  };
 
   return (
     <Card>
@@ -75,7 +92,9 @@ export function AudiogramForm() {
               <Label htmlFor="ear">Ear</Label>
               <Select
                 value={formData.ear}
-                onValueChange={(value: "right" | "left") => setFormData((prev) => ({ ...prev, ear: value, id: "" }))}
+                onValueChange={(value: "right" | "left") =>
+                  setFormData((prev) => ({ ...prev, ear: value, id: "" }))
+                }
               >
                 <SelectTrigger id="ear">
                   <SelectValue placeholder="Select ear" />
@@ -91,7 +110,9 @@ export function AudiogramForm() {
               <Label htmlFor="frequency">Frequency (Hz)</Label>
               <Select
                 value={formData.frequency}
-                onValueChange={(value) => setFormData((prev) => ({ ...prev, frequency: value, id: "" }))}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({ ...prev, frequency: value, id: "" }))
+                }
               >
                 <SelectTrigger id="frequency">
                   <SelectValue placeholder="Select frequency" />
@@ -116,7 +137,12 @@ export function AudiogramForm() {
                 min="-10"
                 max="120"
                 value={formData.threshold}
-                onChange={(e) => setFormData((prev) => ({ ...prev, threshold: e.target.value }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    threshold: e.target.value,
+                  }))
+                }
                 placeholder="Enter threshold value"
               />
             </div>
@@ -125,7 +151,9 @@ export function AudiogramForm() {
               <Label htmlFor="testType">Test Type</Label>
               <Select
                 value={formData.testType}
-                onValueChange={(value: PTATestType) => setFormData((prev) => ({ ...prev, testType: value }))}
+                onValueChange={(value: PTATestType) =>
+                  setFormData((prev) => ({ ...prev, testType: value }))
+                }
               >
                 <SelectTrigger id="testType">
                   <SelectValue placeholder="Select test type" />
@@ -142,9 +170,15 @@ export function AudiogramForm() {
           </div>
 
           <div className="flex space-x-2">
-            <Button type="submit">{formData.id ? "Update" : "Add"} Point</Button>
+            <Button type="submit">
+              {formData.id ? "Update" : "Add"} Point
+            </Button>
             {formData.id && (
-              <Button type="button" variant="destructive" onClick={handleRemove}>
+              <Button
+                type="button"
+                variant="destructive"
+                onClick={handleRemove}
+              >
                 Remove Point
               </Button>
             )}
@@ -182,6 +216,5 @@ export function AudiogramForm() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
-

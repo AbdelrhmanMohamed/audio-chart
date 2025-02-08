@@ -1,8 +1,8 @@
-import { AudiogramChart } from "@/components/audiogram-chart"
-import { AudiogramForm } from "@/components/audiogram-form"
-import { SpeechAudiometryTable } from "@/components/speech-audiometry-table"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { AudiologyProvider } from "@/contextes/audiology-context"
+import { AudiogramChart } from "@/components/audiogram-chart";
+import { AudiogramForm } from "@/components/audiogram-form";
+import { SpeechAudiometryTable } from "@/components/speech-audiometry-table";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AudiologyProvider } from "@/contextes/audiology-context";
 
 export default function AudiologyPage() {
   return (
@@ -10,12 +10,17 @@ export default function AudiologyPage() {
       <div className="container mx-auto p-6">
         <h1 className="text-3xl font-bold mb-6">Audiology Results</h1>
         <div className="grid lg:grid-cols-2 gap-16">
-        <AudiogramChart ear="right" />
-        <AudiogramChart ear="left" />
+          <div className="mb-4">
+            <AudiogramChart ear="right" />
+          </div>
+
+          <div className="mb-4">
+            <AudiogramChart ear="left" />
+          </div>
         </div>
         <div>
-            <AudiogramForm />
-          </div>
+          <AudiogramForm />
+        </div>
         <Card className="mt-6">
           <CardHeader>
             <CardTitle>Speech Audiometry</CardTitle>
@@ -26,6 +31,5 @@ export default function AudiologyPage() {
         </Card>
       </div>
     </AudiologyProvider>
-  )
+  );
 }
-
