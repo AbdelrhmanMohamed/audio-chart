@@ -1,4 +1,3 @@
-import Image from "next/image";
 import AudiologyPage from "./(home)/page";
 
 export default function Page() {
