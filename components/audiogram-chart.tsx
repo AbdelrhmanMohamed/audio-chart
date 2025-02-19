@@ -22,7 +22,6 @@ import {
   Star,
   Square,
   Asterisk,
-  Icon,
 } from "lucide-react";
 
 interface AudiogramChartProps {
