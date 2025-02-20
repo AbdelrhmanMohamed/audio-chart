@@ -1,4 +1,6 @@
-import AudiologyPage from "./(home)/page";
+import AudiologyPage from "./(home)/view";
+
+export const dynamic = "force-dynamic";
 
 export default function Page() {
   return (
