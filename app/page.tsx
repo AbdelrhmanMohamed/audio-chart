@@ -1,4 +1,4 @@
-import AudiologyPage from "./(home)/view";
+import AudiologyPage from "./view";
 
 export const dynamic = "force-dynamic";
 
